@@ -56,13 +56,11 @@ module JSONAPI
         field_names, predicates = JSONAPI::Filtering
           .extract_attributes_and_predicates(requested_field)
 
-        wants_array = predicates.any? && predicates.map(&:wants_array).any?
-
-        if to_filter.is_a?(String) && wants_array
+        if to_filter.is_a?(String)
           to_filter = to_filter.split(',')
         end
 
-        if predicates.any? && (field_names - allowed_fields).empty?
+        if (field_names - allowed_fields).empty?
           filtered[requested_field] = to_filter
         end
       end
